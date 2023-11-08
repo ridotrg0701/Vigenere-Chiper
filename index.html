@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Tebak Kata Vigenere Cipher </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #121312;
+        }
+
+        #game-container {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #0dccda;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            padding: 5px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #00ff15;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Tebak Kata Vigenere Cipher</h1>
+    <h1>Kelompok 1 PSM 22C</h1>
+    <div id="game-container">
+        <label for="keyword">Kata Kunci:</label>
+        <input type="text" id="keyword" placeholder="Masukkan kata kunci" required>
+        <label for="encrypted-text">Teks Terenkripsi:</label>
+        <input type="text" id="encrypted-text" placeholder="Masukkan teks terenkripsi" required>
+        <label for="guess">Tebak Kata:</label>
+        <input type="text" id="guess" placeholder="Tebak kata" required>
+        <button onclick="checkGuess()">Periksa</button>
+        <p id="result"></p>
+    </div>
+    <img src="vigenere.jpeg"  style="max-width: 50%;">
+   
+    
+    <script>
+        function checkGuess() {
+            const keyword = document.getElementById("keyword").value;
+            const encryptedText = document.getElementById("encrypted-text").value;
+            const guess = document.getElementById("guess").value;
+
+            // Fungsi untuk mendekripsi teks terenkripsi dengan kata kunci
+            function vigenereDecrypt(ciphertext, keyword) {
+                let decryptedText = "";
+                for (let i = 0; i < ciphertext.length; i++) {
+                    const charCodeCiphertext = ciphertext.charCodeAt(i);
+                    const charCodeKeyword = keyword.charCodeAt(i % keyword.length);
+                    const decryptedCharCode = (charCodeCiphertext - charCodeKeyword + 26) % 26 + 65;
+                    decryptedText += String.fromCharCode(decryptedCharCode);
+                }
+                return decryptedText;
+            }
+
+            const decryptedText = vigenereDecrypt(encryptedText, keyword);
+
+            if (decryptedText === guess) {
+                document.getElementById("result").innerHTML = "Selamat, tebakan Anda benar!";
+            } else {
+                document.getElementById("result").innerHTML = "Maaf, tebakan Anda salah. Silakan coba lagi.";
+            }
+        }
+    </script>
+</body>
+</html>
